@@ -11,8 +11,15 @@ class BundleClean {
         }
     }
     apply(compiler) {
-        let stats = require(path.join(this.path, this.filename));
         compiler.plugin('compile', function(factory, callback) {
+            let filename = path.join(this.path, this.filename);
+            try {
+                fs.accessSync(filename, fs.constants.R_OK);
+            } catch(e) {
+                console.log(e.message);
+                return;
+            }
+            let stats = require(filename);
             if (stats.chunks) {
                 Object.keys(stats.chunks).forEach(function(name) {
                     let chunk = stats.chunks[name];
@@ -21,7 +28,7 @@ class BundleClean {
                         try {
                             fs.unlinkSync(chunk[0].path);
                         } catch(e) {
-                            console.log(e);
+                            console.log(e.message);
                         }
                     }
                 })
