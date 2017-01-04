@@ -30,4 +30,4 @@ class BundleClean {
     }
 }
 
-module.export = BundleClean;
+module.exports = BundleClean;
