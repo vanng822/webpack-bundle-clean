@@ -19,19 +19,24 @@ class BundleClean {
                 console.log(e.message);
                 return;
             }
-            let stats = require(filename);
-            if (stats.chunks) {
-                Object.keys(stats.chunks).forEach(function(name) {
-                    let chunk = stats.chunks[name];
-                    if (chunk && chunk[0] && chunk[0].path) {
-                        console.log('removing', chunk[0].path);
-                        try {
-                            fs.unlinkSync(chunk[0].path);
-                        } catch(e) {
-                            console.log(e.message);
+            try {
+                let stats = JSON.parse(fs.readFileSync(filename));
+
+                if (stats.chunks) {
+                    Object.keys(stats.chunks).forEach(function(name) {
+                        let chunk = stats.chunks[name];
+                        if (chunk && chunk[0] && chunk[0].path) {
+                            console.log('removing', chunk[0].path);
+                            try {
+                                fs.unlinkSync(chunk[0].path);
+                            } catch(e) {
+                                console.log(e.message);
+                            }
                         }
-                    }
-                })
+                    })
+                }
+            } catch(e) {
+                console.log(e.message)
             }
         }.bind(this));
     }
