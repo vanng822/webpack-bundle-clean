@@ -15,7 +15,7 @@ module.exports = {
     },
     output: {
         path: './public/dist/js/',
-        filename: '[name].js',
+        filename: '[hash].js',
         publicPath: '/assets/dist/js/'
     },
     module: {
