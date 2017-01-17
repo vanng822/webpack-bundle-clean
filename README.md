@@ -7,7 +7,6 @@ Use together with https://github.com/owais/webpack-bundle-tracker
 ```javascript
 const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
-const WebpackTouch = require('webpack-touch');
 const BundleClean = require('webpack-bundle-clean');
 
 module.exports = {
@@ -33,8 +32,7 @@ module.exports = {
     },
     plugins: [
       new BundleClean({path: __dirname, filename: './run/webpack-stats.json'}),
-      new BundleTracker({path: __dirname, filename: './run/webpack-stats.json', indent: '  '}),
-      new WebpackTouch({filename: './run/reload.touch', delay: 2000})
+      new BundleTracker({path: __dirname, filename: './run/webpack-stats.json', indent: '  '})
     ]
 }
 ```
